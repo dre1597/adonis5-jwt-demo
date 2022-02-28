@@ -13,15 +13,11 @@ export default class SessionsController {
     }
   }
 
-  public async login({ auth, request, response }: HttpContextContract) {
+  public async login({ auth, request }: HttpContextContract) {
     const { email, password } = await request.validate(SessionValidator)
 
-    try {
-      const user = await User.findByOrFail('email', email)
-      const token = await auth.use('api').attempt(email, password)
-      return { user, token }
-    } catch (error) {
-      return response.status(422).send({ error: 'Invalid credentials ' })
-    }
+    const user = await User.findByOrFail('email', email)
+    const token = await auth.use('jwt').attempt(email, password)
+    return { user, token }
   }
 }
