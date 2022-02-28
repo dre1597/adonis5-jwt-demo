@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { User } from 'App/Models'
-import { SessionValidator, SignUpValidator } from 'App/Validators'
+import { RefreshTokenValidator, LoginValidator, SignUpValidator } from 'App/Validators'
 
 export default class SessionsController {
   public async signUp({ request, response }: HttpContextContract) {
@@ -14,10 +14,16 @@ export default class SessionsController {
   }
 
   public async login({ auth, request }: HttpContextContract) {
-    const { email, password } = await request.validate(SessionValidator)
+    const { email, password } = await request.validate(LoginValidator)
 
     const user = await User.findByOrFail('email', email)
     const token = await auth.use('jwt').attempt(email, password)
     return { user, token }
+  }
+
+  public async refresh({ request, auth }: HttpContextContract) {
+    const { refreshToken } = await request.validate(RefreshTokenValidator)
+    const token = await auth.use('jwt').loginViaRefreshToken(refreshToken)
+    return { user: auth.user, token }
   }
 }

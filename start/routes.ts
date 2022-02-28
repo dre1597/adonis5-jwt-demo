@@ -27,3 +27,5 @@ Route.get('/', async () => {
 Route.post('/signup', 'SessionsController.signUp')
 
 Route.post('/login', 'SessionsController.login')
+
+Route.post('/refresh', 'SessionsController.refresh').middleware('auth:jwt')
