@@ -29,3 +29,5 @@ Route.post('/signup', 'SessionsController.signUp')
 Route.post('/login', 'SessionsController.login')
 
 Route.post('/refresh', 'SessionsController.refresh').middleware('auth:jwt')
+
+Route.delete('/logout', 'SessionsController.logout').middleware('auth:jwt')

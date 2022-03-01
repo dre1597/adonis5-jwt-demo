@@ -26,4 +26,9 @@ export default class SessionsController {
     const token = await auth.use('jwt').loginViaRefreshToken(refreshToken)
     return { user: auth.user, token }
   }
+
+  public async logout({ auth }: HttpContextContract) {
+    await auth.use('jwt').revoke()
+    return { revoked: true }
+  }
 }
