@@ -1,6 +1,6 @@
 # Adonis5 JWT demo
 
-This project is to study this (package)[https://github.com/maxgalbu/adonis5-jwt] and maybe apply on a private project and others future projects.
+This project is to study this [package](https://github.com/maxgalbu/adonis5-jwt) and maybe apply on a private project and others future projects.
 
 ## feature/access_profiles
 
